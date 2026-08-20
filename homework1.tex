@@ -1,0 +1,297 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage{bussproofs}
+\usepackage{tikz-cd}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+    language=Prolog,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\itshape\color{gray},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single, 
+    numbers=left, 
+    numberstyle=\tiny\color{gray}
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Boilerplate LaTeX Template},
+    pdfauthor={Your Name},
+}
+
+\title{HW Assignment 1}
+\author{Janelle Lee (24272501)}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\textbf{Question 1a} \\ 
+
+h1. $\forall P (\exists T (R(P, T)))$
+
+where:
+\begin{itemize}
+    \item $P$ = project
+    \item $T$ = research topic
+    \item $R(X, Y)$ = project $X$ is related to research topic $Y$
+\end{itemize} 
+
+\vspace{1em}
+
+h2. $\forall P \forall T \forall S ((R(P, T) \land W(P, S)) \implies L(S, T))$
+
+where:
+\begin{itemize}
+    \item $P$ = project
+    \item $T$ = research topic
+    \item $S$ = student
+    \item $W(A, B)$ = student $B$ works on project $A$
+    \item $L(C, D)$ = student $C$ studies research topic $D$
+\end{itemize}
+
+\vspace{1em}
+
+
+c3. $\forall P (V(A, P) \implies \exists S (W(P, S)))$
+
+where:
+\begin{itemize}
+    \item $P$ = project
+    \item $A$ = academic supervisor
+    \item $S$ = student
+    \item $V(X, Y)$ = supervisor $X$ supervises project $Y$
+\end{itemize}
+
+\vspace{1em}
+
+Given facts:
+\begin{itemize}
+    \item h4. $W($proj1, Cris)
+    \item h5. $R($proj2, AI) $\land R($proj2, Logic)
+    \item h6. $V($Alice, proj2)
+\end{itemize}
+
+\vspace{1em}
+
+
+\textbf{Question 1b} \\
+
+1. $\forall P (\exists T (R(P, T)))$ \\
+\indent skolemisation: $\forall P (R(P, f(P)))$ \\
+\indent generalisation: $R(P, f(P))$
+
+\vspace{1em}
+
+2. $\forall P \forall T \forall S ((R(P, T) \land W(P, S)) \implies L(S, T))$ \\
+\indent eliminate implications: $\forall P \forall T \forall S (\neg (R(P, T) \land W(P, S)) \lor L(S, T))$ \\
+\indent push negation: $\forall P \forall T \forall S ((\neg R(P, T) \lor \neg W(P, S)) \lor L(S, T))$ \\
+\indent generalisation: $(\neg R(P, T) \lor \neg W(P, S)) \lor L(S, T)$ \\
+\indent remove brackets: $\neg R(P, T) \lor \neg W(P, S) \lor L(S, T)$
+
+\vspace{1em}
+
+3. $\forall P (V(A, P) \implies \exists S (W(P, S)))$ \\
+\indent eliminate implications: $\forall P(\neg V(A, P) \lor \exists S (W(P, S)))$ \\ 
+\indent skolemisation: $\forall P (\neg V(A, P) \lor W(P, f(P)))$ \\ 
+\indent generalisation: $\neg V(A, P) \lor W(P, f(P))$
+
+\vspace{1em}
+
+Final clauses: \\
+\begin{itemize}
+    \item c1: $W(\text{proj1}, \text{Cris})$
+    \item c2: $R(\text{proj2}, \text{AI})$
+    \item c3: $V(\text{Alice}, \text{proj2})$
+    \item c4: $R(P, f(P))$
+    \item c5: $\neg R(P, T) \lor \neg W(P, S) \lor L(S, T)$
+    \item c6: $\neg V(A, P) \lor W(P, f(P))$
+    \item c7: $R(\text{proj2}, \text{Logic})$
+\end{itemize}
+
+\vspace{1em}
+
+
+\newpage
+
+\textbf{Question 2a} \\ 
+
+Prove: $(A \lor B) \land \neg B \implies A$ 
+
+\vspace{1em}
+
+let: \\
+\indent $h1 = A \lor B$ \\
+\indent $h2 = \neg B$
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{($h1$)}
+    \UnaryInfC{$A \lor B$} 
+    
+    \AxiomC{$[A]^1$}
+    
+    \AxiomC{$[B]^2$}
+    \AxiomC{} 
+    \RightLabel{($h2$)} 
+    \UnaryInfC{$\neg B$}
+    \RightLabel{($\neg$E)}
+    \BinaryInfC{$\bot$}
+    \RightLabel{($\bot$E)}
+    \UnaryInfC{$A$}
+    
+    \RightLabel{($\lor$E)$^{1,2}$}
+    \TrinaryInfC{$A$}
+    
+    \RightLabel{($\implies$I)$^{h1, h2}$}
+    \UnaryInfC{$(A \lor B) \land \neg B \implies A$}        
+\end{prooftree}
+
+
+\vspace{1em}
+
+\textbf{Question 2b} \\
+
+Prove: There is a research topic that Cris studies
+
+\vspace{1em}
+
+Prove (FOL form): $\exists T (L(\text{Cris}, \text{T}))$
+
+{\footnotesize
+\begin{prooftree}
+    \AxiomC{\phantom{X}}
+    \noLine
+    \UnaryInfC{\phantom{X}}
+    \noLine
+    \UnaryInfC{$\forall P(\exists T(R(P, T)))$}
+    \RightLabel{($\forall$E)}
+    \UnaryInfC{$\exists T(R(\text{proj1}, T))$}
+    
+    \AxiomC{$[R(\text{proj1}, t_1)]^1$}
+    
+    \AxiomC{}
+    \RightLabel{(h4)}
+    \UnaryInfC{$W(\text{proj1}, \text{Cris})$}
+    
+    \RightLabel{($\land$I)}
+    \BinaryInfC{$R(\text{proj1}, t_1) \land W(\text{proj1}, \text{Cris})$}
+    
+    \AxiomC{$\begin{array}{c} 
+        (R(\text{proj1}, t_1) \land W(\text{proj1}, \text{Cris})) \\ 
+        \implies L(\text{Cris}, t_1) 
+    \end{array}$}
+    
+    \insertBetweenHyps{\hskip 2em}
+    \RightLabel{($\implies$E)}
+    \BinaryInfC{$L(\text{Cris}, t_1)$}
+    
+    \RightLabel{($\exists$I)}
+    \UnaryInfC{$\exists T(L(\text{Cris}, T))$}
+    
+    \RightLabel{($\exists$E$^1$)}
+    \BinaryInfC{$\exists T(L(\text{Cris}, T))$}
+\end{prooftree}
+}
+
+\vspace{1em}
+
+\textbf{Question 2c} \\
+
+Prove: There is a student studying AI \\ 
+\indent Prove (FOL form): $\exists S (L(S, \text{AI}))$
+
+\vspace{1em}
+
+\indent negation: $\neg \exists S (L(S, \text{AI}))$ \\ 
+\indent move negation inwards: $\forall S (\neg L(S, \text{AI}))$ \\ 
+\indent generalisation: $\neg L(S, \text{AI})$ \\
+\indent c8: $\neg L(S, \text{AI})$
+
+{\tiny
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=small]
+    \text{c8: } \neg L(S, \text{AI}) \arrow[dr] & & \text{c5: } \neg R(P, T) \lor \neg W(P, S) \lor L(S, T) \arrow[dl] & & & \\
+    
+    & \neg R(P, \text{AI}) \lor \neg W(P, S) \arrow[dr] & & \text{c2: } R(\text{proj2}, \text{AI}) \arrow[dl] & & \\
+    
+    & & \neg W(\text{proj2}, S) \arrow[dr] & & \text{c6: } \neg V(A, P) \lor W(P, f(P)) \arrow[dl] & \\
+    
+    & & & \neg V(A, \text{proj2}) \arrow[dr] & & \text{c3: } V(\text{Alice}, \text{proj2}) \arrow[dl] \\
+    
+    & & & & \square &
+\end{tikzcd}
+\end{center}
+}
+
+\vspace{1em}
+
+
+\newpage
+\textbf{Question 3a} \\
+
+\begin{lstlisting}
+    connected(perth, bull_creek, perth_mandurah).
+    connected(bull_creek, cockburn, perth_mandurah).
+    connected(elizabeth_quay, canning_bridge, perth_mandurah).
+    connected(murdoch, aubin_grove, perth_mandurah).
+    connected(bull_creek, murdoch, perth_mandurah).
+    connected(perth, burswood, perth_armadale).
+    connected(cannington, beckenham, perth_armadale).
+    connected(kelmscott, byford, perth_armadale).
+    connected(victoria_park, cannington, perth_armadale).
+    connected(armadale, byford, perth_armadale).
+    connected(burswood, victoria_park, perth_armadale).
+    connected(beckenham, kelmscott, perth_armadale).
+    connected(kelmscott, armadale, perth_armadale).
+
+    closed(murdoch).
+
+
+    station_on_line(S, L) :- 
+        connected(S, _, L); 
+        connected(_, S, L).
+
+    before_on_line(S, T, L) :-
+        connected(S, T, L).
+    before_on_line(S, T, L) :-
+        connected(S, X, L),
+        before_on_line(X, T, L).
+
+    terminal(S, L) :-
+        connected(S, _, L), 
+        \+ connected(_, S, L).
+    terminal(S, L) :-
+        connected(_, S, L),
+        \+ connected(S, _, L).
+
+    route_on_line(S, T, L, [S, T]) :-
+        connected(S, T, L),
+        \+ closed(S),
+        \+ closed(T).
+
+    route_on_line(S, T, L, [S | Rest]) :-
+        connected(S, X, L),
+        \+ closed(S),
+        route_on_line(X, T, L, Rest).
+\end{lstlisting}
+
+
+\end{document}
